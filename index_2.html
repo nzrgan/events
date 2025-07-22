@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Таблиця з сортуванням</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: beige;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <table id="sortable-table">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">Ім'я</th>
+        <th onclick="sortTable(1)">Вік</th>
+        <th onclick="sortTable(2)">Зарплата</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Іван</td>
+        <td>30</td>
+        <td>5000</td>
+      </tr>
+      <tr>
+        <td>Анастасія</td>
+        <td>27</td>
+        <td>4000</td>
+      </tr>
+      <tr>
+        <td>Петро</td>
+        <td>32</td>
+        <td>6000</td>
+      </tr>
+      <tr>
+        <td>Олег</td>
+        <td>25</td>
+        <td>4500</td>
+      </tr>
+      <tr>
+        <td>Марія</td>
+        <td>28</td>
+        <td>5500</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    function sortTable(columnIndex) {
+      const table = document.getElementById('sortable-table');
+      const rows = Array.from(table.rows).slice(1);  // Пропускаємо заголовки
+
+      rows.sort((rowA, rowB) => {
+        const cellA = rowA.cells[columnIndex].innerText;
+        const cellB = rowB.cells[columnIndex].innerText;
+
+        // Перевірка, чи є значення числовим
+        const isNumeric = !isNaN(cellA) && !isNaN(cellB);
+        if (isNumeric) {
+          return parseFloat(cellA) - parseFloat(cellB);
+        }
+
+        return cellA.localeCompare(cellB);
+      });
+
+      // Переміщаємо відсортовані рядки в таблицю
+      rows.forEach(row => table.appendChild(row));
+    }
+  </script>
+</body>
+
+</html>
